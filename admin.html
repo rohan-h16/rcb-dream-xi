@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RCB Dream XI — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#D4AF37;--gold-l:#F5DEB3;--gold-d:#8B7536;
+  --red:#8B0000;--red-m:#CC1111;
+  --bg:#050507;--surface:rgba(8,8,12,0.97);
+  --border:rgba(212,175,55,0.2);--border-h:rgba(212,175,55,0.5);
+  --text:#F0E6D0;--text-dim:rgba(240,230,208,0.55);--text-muted:rgba(240,230,208,0.3);
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 10% 100%,rgba(139,0,0,0.4) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 90% 0%,rgba(139,0,0,0.25) 0%,transparent 60%);}
+#bg-logo{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:60vmin;height:60vmin;object-fit:contain;opacity:0.04;z-index:0;pointer-events:none;}
+
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+/* HEADER */
+.admin-header{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  padding:1.5rem 0 1.5rem;
+  border-bottom:1px solid var(--border);margin-bottom:2rem;
+}
+.admin-logo{display:flex;align-items:center;gap:0.8rem;}
+.admin-logo img{width:44px;height:44px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(212,175,55,0.5));}
+.admin-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;font-weight:700;color:var(--gold-l);letter-spacing:0.1em;}
+.admin-sub{font-size:0.68rem;color:var(--text-muted);letter-spacing:0.18em;font-family:'Cinzel',serif;}
+.admin-badge{
+  background:rgba(139,0,0,0.3);border:1px solid rgba(139,0,0,0.6);
+  border-radius:6px;padding:0.4rem 0.9rem;
+  font-size:0.72rem;letter-spacing:0.18em;color:#FF9090;font-family:'Cinzel',serif;font-weight:700;
+}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.2rem 1.4rem;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red-m),var(--gold),var(--red-m),transparent);
+}
+.stat-num{
+  font-family:'Cinzel Decorative',serif;font-size:2.2rem;font-weight:700;
+  color:var(--gold);line-height:1;text-shadow:0 0 20px rgba(212,175,55,0.3);
+}
+.stat-label{font-size:0.66rem;letter-spacing:0.2em;color:var(--text-muted);margin-top:0.3rem;font-family:'Cinzel',serif;}
+
+/* TABLE */
+.table-wrap{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;margin-bottom:2rem;
+}
+.table-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);
+  background:rgba(212,175,55,0.04);flex-wrap:wrap;gap:0.8rem;
+}
+.table-heading{
+  font-family:'Cinzel',serif;font-size:0.82rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.18em;
+}
+.table-actions{display:flex;gap:0.5rem;}
+.btn-sm{
+  background:transparent;border:1px solid var(--border);border-radius:6px;
+  color:var(--text-dim);font-family:'Rajdhani',sans-serif;font-size:0.72rem;
+  font-weight:600;letter-spacing:0.1em;padding:0.35rem 0.8rem;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-sm:hover{border-color:var(--gold-d);color:var(--gold-d);}
+.btn-sm.danger:hover{border-color:#FF6B6B;color:#FF6B6B;}
+
+/* SUBMISSIONS TABLE */
+.sub-table{width:100%;border-collapse:collapse;}
+.sub-table th{
+  font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;
+  color:var(--gold-d);padding:0.7rem 1rem;text-align:left;
+  border-bottom:1px solid var(--border);background:rgba(212,175,55,0.02);
+  white-space:nowrap;
+}
+.sub-table td{
+  padding:0.75rem 1rem;border-bottom:1px solid rgba(212,175,55,0.08);
+  font-size:0.8rem;vertical-align:middle;
+}
+.sub-table tr:hover td{background:rgba(212,175,55,0.03);}
+.sub-table tr:last-child td{border-bottom:none;}
+.td-name{font-weight:700;color:var(--text);letter-spacing:0.04em;}
+.td-team{color:var(--gold-d);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:0.85rem;}
+.td-cap{color:var(--gold);font-weight:600;}
+.td-fan-yr{color:var(--text-dim);}
+.td-time{font-size:0.7rem;color:var(--text-muted);}
+.td-view{cursor:pointer;color:var(--gold-d);text-decoration:underline;font-size:0.72rem;letter-spacing:0.06em;}
+.td-view:hover{color:var(--gold);}
+
+/* PLAYER COUNT CHART */
+.popularity-wrap{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;margin-bottom:2rem;
+}
+.pop-head{
+  padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);
+  background:rgba(212,175,55,0.04);
+}
+.pop-head .table-heading{display:block;}
+.pop-body{padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:0.6rem;}
+.pop-row{display:flex;align-items:center;gap:1rem;}
+.pop-name{font-size:0.78rem;font-weight:600;color:var(--text);width:160px;flex-shrink:0;letter-spacing:0.03em;}
+.pop-bar-wrap{flex:1;height:8px;background:rgba(212,175,55,0.08);border-radius:4px;overflow:hidden;}
+.pop-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--red-m),var(--gold));transition:width 0.6s ease;}
+.pop-count{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:700;color:var(--gold);width:36px;text-align:right;flex-shrink:0;}
+
+/* MODAL */
+.modal-bg{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(5,5,7,0.85);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:1.5rem;
+}
+.modal-bg.open{display:flex;}
+.modal{
+  background:var(--surface);border:1px solid var(--border-h);
+  border-radius:16px;max-width:640px;width:100%;
+  max-height:90vh;overflow-y:auto;
+  box-shadow:0 8px 60px rgba(0,0,0,0.8);
+  position:relative;
+}
+.modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red-m),var(--gold),var(--red-m),transparent);
+}
+.modal-header{
+  padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-title{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;}
+.modal-close{
+  background:transparent;border:1px solid var(--border);border-radius:6px;
+  color:var(--text-dim);font-size:0.75rem;padding:0.3rem 0.7rem;
+  cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;
+  transition:all 0.2s;letter-spacing:0.08em;
+}
+.modal-close:hover{border-color:var(--gold-d);color:var(--gold-d);}
+.modal-body{padding:1.5rem;}
+.modal-info-row{
+  display:flex;gap:2rem;flex-wrap:wrap;
+  padding-bottom:1rem;margin-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.mi{text-align:left;}
+.mi label{display:block;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold-d);font-family:'Cinzel',serif;margin-bottom:0.2rem;}
+.mi .mval{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;color:var(--gold-l);}
+.modal-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:0.6rem;
+}
+.modal-player{
+  background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.18);
+  border-radius:8px;padding:0.6rem 0.4rem;
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.25rem;
+}
+.modal-player.cap{border-color:var(--gold);background:rgba(212,175,55,0.12);}
+.mp-slot{font-size:0.52rem;color:var(--gold-d);letter-spacing:0.1em;font-family:'Cinzel',serif;}
+.mp-name{font-size:0.68rem;font-weight:700;color:var(--text);line-height:1.2;}
+.mp-cap{font-size:0.52rem;background:var(--gold);color:#060608;border-radius:20px;padding:1px 6px;font-weight:700;font-family:'Cinzel',serif;}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:4rem 2rem;
+}
+.empty-state .es-icon{font-size:3rem;margin-bottom:1rem;}
+.empty-state h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-d);letter-spacing:0.15em;margin-bottom:0.5rem;}
+.empty-state p{font-size:0.8rem;color:var(--text-muted);}
+
+/* TOAST */
+.toast{
+  position:fixed;top:1.5rem;left:50%;transform:translateX(-50%);
+  background:rgba(8,8,12,0.97);border:1px solid var(--gold);
+  border-radius:10px;padding:0.65rem 1.5rem;
+  font-size:0.8rem;font-weight:600;color:var(--gold);
+  letter-spacing:0.1em;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.toast.show{opacity:1;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.25);border-radius:2px;}
+
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .sub-table th:nth-child(n+5),.sub-table td:nth-child(n+5){display:none;}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<img id="bg-logo"
+  src="https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png"
+  alt="" onerror="this.style.display='none'">
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">DREAM XI DETAILS</div>
+      <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="admin-header">
+    <div class="admin-logo">
+      <img src="https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png"
+        alt="RCB" onerror="this.style.display='none'">
+      <div>
+        <div class="admin-title">ADMIN DASHBOARD</div>
+        <div class="admin-sub">RCB DREAM XI BUILDER</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.7rem;align-items:center;flex-wrap:wrap;">
+      <div class="admin-badge">🔴 ADMIN ACCESS</div>
+      <a href="index.html" style="text-decoration:none;">
+        <button class="btn-sm">← BACK TO BUILDER</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">TOTAL SUBMISSIONS</div></div>
+    <div class="stat-card"><div class="stat-num" id="statToday">0</div><div class="stat-label">TODAY'S SUBMISSIONS</div></div>
+    <div class="stat-card"><div class="stat-num" id="statFanYr">0</div><div class="stat-label">AVG FAN YEARS</div></div>
+    <div class="stat-card"><div class="stat-num" id="statTopCap">—</div><div class="stat-label">MOST POPULAR CAPTAIN</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-head">
+      <div class="table-heading">ALL SUBMISSIONS</div>
+      <div class="table-actions">
+        <button class="btn-sm" onclick="exportCSV()">↓ EXPORT CSV</button>
+        <button class="btn-sm danger" onclick="clearAll()">🗑 CLEAR ALL</button>
+      </div>
+    </div>
+    <div id="tableContent"></div>
+  </div>
+
+  <div class="popularity-wrap">
+    <div class="pop-head"><div class="table-heading">PLAYER POPULARITY</div></div>
+    <div class="pop-body" id="popularityChart"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY="rcbDreamXI_submissions";
+
+const SLOT_LABELS={
+  op1:"Opener 1",op2:"Opener 2",wk:"Wicket Keeper",
+  bat1:"Batsman 1",bat2:"Batsman 2",ar1:"All-rounder 1",ar2:"All-rounder 2",
+  bwl1:"Prime Bowler 1",bwl2:"Prime Bowler 2",bwl3:"Prime Bowler 3",imp:"Impact Player"
+};
+
+const PLAYER_NAMES={
+  1:"Virat Kohli",2:"Phil Salt",3:"Rajat Patidar",4:"Jacob Bethell",
+  5:"Phil Salt",6:"Dinesh Karthik",7:"Devdutt Padikkal",8:"Manoj Bhandage",
+  9:"Liam Livingstone",10:"Tim David",11:"Glenn Maxwell",12:"Krunal Pandya",
+  13:"Swapnil Singh",14:"Jacob Bethell",15:"Josh Hazlewood",16:"Mohammed Siraj",
+  17:"Yash Dayal",18:"Suyash Sharma",19:"Bhuvneshwar Kumar",20:"Rasikh Dar",21:"Lungi Ngidi"
+};
+
+function pName(id){return PLAYER_NAMES[id]||"Unknown #"+id;}
+
+function getData(){
+  try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");}
+  catch(e){return[];}
+}
+
+function init(){
+  const data=getData();
+  renderStats(data);
+  renderTable(data);
+  renderPopularity(data);
+}
+
+function renderStats(data){
+  document.getElementById("statTotal").textContent=data.length;
+
+  const today=new Date().toDateString();
+  const todayCount=data.filter(d=>new Date(d.ts).toDateString()===today).length;
+  document.getElementById("statToday").textContent=todayCount;
+
+  if(data.length){
+    const avg=(data.reduce((a,d)=>a+(d.yearsAsFan||0),0)/data.length).toFixed(1);
+    document.getElementById("statFanYr").textContent=avg;
+
+    // Top captain
+    const caps={};
+    data.forEach(d=>{ if(d.captain){ const n=pName(d.captain); caps[n]=(caps[n]||0)+1; } });
+    const topCap=Object.entries(caps).sort((a,b)=>b[1]-a[1])[0];
+    if(topCap) document.getElementById("statTopCap").textContent=topCap[0].split(" ")[1]||topCap[0].split(" ")[0];
+  }
+}
+
+function renderTable(data){
+  const content=document.getElementById("tableContent");
+  if(!data.length){
+    content.innerHTML=`<div class="empty-state"><div class="es-icon">📋</div><h3>NO SUBMISSIONS YET</h3><p>Dream teams will appear here once fans submit them.</p></div>`;
+    return;
+  }
+
+  const sorted=[...data].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  content.innerHTML=`
+    <table class="sub-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>FAN NAME</th>
+          <th>TEAM NAME</th>
+          <th>CAPTAIN</th>
+          <th>FAN YRS</th>
+          <th>SUBMITTED</th>
+          <th>DETAILS</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sorted.map((d,i)=>`
+          <tr>
+            <td style="color:var(--text-muted);font-size:0.72rem">${sorted.length-i}</td>
+            <td><div class="td-name">${esc(d.userName||"—")}</div></td>
+            <td><div class="td-team">${esc(d.teamName||"—")}</div></td>
+            <td><div class="td-cap">${d.captain?pName(d.captain):"—"}</div></td>
+            <td><div class="td-fan-yr">${d.yearsAsFan===17?"17+":(d.yearsAsFan||0)} yrs</div></td>
+            <td><div class="td-time">${formatDate(d.ts)}</div></td>
+            <td><div class="td-view" onclick="showDetail(${sorted.length-i-1})">VIEW TEAM →</div></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+  // store sorted index for modal
+  window._sortedData=sorted;
+}
+
+function formatDate(ts){
+  try{
+    const d=new Date(ts);
+    return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"2-digit"})+" "+
+           d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+  }catch(e){return ts||"—";}
+}
+
+function esc(str){return String(str).replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function showDetail(idx){
+  const d=window._sortedData[window._sortedData.length-1-idx];
+  if(!d) return;
+
+  const slots=d.slots||{};
+  const yr=d.yearsAsFan;
+
+  document.getElementById("modalTitle").textContent=(d.userName||"FAN")+"'S DREAM XI";
+  document.getElementById("modalBody").innerHTML=`
+    <div class="modal-info-row">
+      <div class="mi"><label>FAN NAME</label><div class="mval">${esc(d.userName||"—")}</div></div>
+      <div class="mi"><label>TEAM NAME</label><div class="mval">${esc(d.teamName||"—")}</div></div>
+      <div class="mi"><label>FAN SINCE</label><div class="mval">${yr===17?"17+":(yr||0)} yrs</div></div>
+      <div class="mi"><label>SUBMITTED</label><div class="mval" style="font-size:0.75rem">${formatDate(d.ts)}</div></div>
+    </div>
+    <div class="modal-grid">
+      ${Object.entries(SLOT_LABELS).map(([key,label])=>{
+        const pid=slots[key];
+        if(!pid) return `<div class="modal-player"><div class="mp-slot">${label.toUpperCase()}</div><div class="mp-name" style="color:var(--text-muted)">EMPTY</div></div>`;
+        const isCap=pid==d.captain;
+        return `<div class="modal-player${isCap?" cap":""}">
+          <div class="mp-slot">${label.toUpperCase()}</div>
+          ${isCap?'<div class="mp-cap">© CAPTAIN</div>':""}
+          <div class="mp-name">${pName(pid)}</div>
+        </div>`;
+      }).join("")}
+    </div>
+  `;
+  document.getElementById("modalBg").classList.add("open");
+}
+
+function closeModal(){
+  document.getElementById("modalBg").classList.remove("open");
+}
+document.getElementById("modalBg").addEventListener("click",function(e){
+  if(e.target===this) closeModal();
+});
+
+function renderPopularity(data){
+  const chart=document.getElementById("popularityChart");
+  if(!data.length){
+    chart.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.8rem;">No data yet</div>';
+    return;
+  }
+
+  const counts={};
+  data.forEach(d=>{
+    Object.values(d.slots||{}).forEach(pid=>{
+      const name=pName(pid);
+      counts[name]=(counts[name]||0)+1;
+    });
+  });
+
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const max=sorted[0]?sorted[0][1]:1;
+
+  chart.innerHTML=sorted.map(([name,count])=>`
+    <div class="pop-row">
+      <div class="pop-name">${name}</div>
+      <div class="pop-bar-wrap">
+        <div class="pop-bar" style="width:${(count/max*100).toFixed(1)}%"></div>
+      </div>
+      <div class="pop-count">${count}</div>
+    </div>
+  `).join("");
+}
+
+function exportCSV(){
+  const data=getData();
+  if(!data.length){toast("No data to export!");return;}
+  const headers=["#","Fan Name","Team Name","Captain","Fan Years","Submitted",...Object.values(SLOT_LABELS)];
+  const rows=data.map((d,i)=>[
+    i+1,
+    d.userName||"",
+    d.teamName||"",
+    d.captain?pName(d.captain):"",
+    d.yearsAsFan||0,
+    d.ts||"",
+    ...Object.keys(SLOT_LABELS).map(k=>d.slots&&d.slots[k]?pName(d.slots[k]):"")
+  ]);
+  const csv=[headers,...rows].map(row=>row.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob=new Blob([csv],{type:"text/csv"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download="rcb-dream-xi-submissions.csv"; a.click();
+  URL.revokeObjectURL(url);
+  toast("CSV exported successfully!");
+}
+
+function clearAll(){
+  if(!confirm("⚠️ Delete ALL submissions? This cannot be undone.")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  toast("All submissions cleared.");
+  init();
+}
+
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg; el.classList.add("show");
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("show"),2600);
+}
+
+init();
+</script>
+</body>
+</html>

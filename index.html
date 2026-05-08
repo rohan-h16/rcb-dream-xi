@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RCB Dream XI Builder — Ee Sala Cup Namde</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#D4AF37;--gold-l:#F5DEB3;--gold-d:#8B7536;--gold-dim:rgba(212,175,55,0.15);
+  --red:#8B0000;--red-m:#CC1111;--red-bright:#FF2020;
+  --bg:#050507;--surface:rgba(8,8,12,0.95);--surface2:rgba(14,12,10,0.9);
+  --border:rgba(212,175,55,0.22);--border-h:rgba(212,175,55,0.55);
+  --text:#F0E6D0;--text-dim:rgba(240,230,208,0.5);--text-muted:rgba(240,230,208,0.3);
+  --shadow-gold:0 0 40px rgba(212,175,55,0.18);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+
+/* BG */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+#bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 100%,rgba(139,0,0,0.5) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 50% at 90% 0%,rgba(139,0,0,0.3) 0%,transparent 65%),
+    radial-gradient(ellipse 100% 70% at 50% 50%,rgba(5,5,7,0) 0%,#050507 80%);
+}
+#bg-logo{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:72vmin;height:72vmin;object-fit:contain;
+  opacity:0.07;filter:sepia(1) saturate(2) hue-rotate(-10deg);
+}
+#bg-text{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-52%);
+  font-family:'Cinzel Decorative',serif;font-size:34vw;font-weight:900;
+  color:rgba(212,175,55,0.028);line-height:1;letter-spacing:-0.05em;
+  user-select:none;white-space:nowrap;
+}
+.noise{
+  position:absolute;inset:0;opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* PAGES */
+.page{
+  position:fixed;inset:0;z-index:1;
+  display:flex;align-items:flex-start;justify-content:center;
+  opacity:0;pointer-events:none;overflow-y:auto;
+  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1);
+  padding:2rem 1rem 6rem;
+}
+.page.active{opacity:1;pointer-events:all;}
+.page.active .animate-in{animation:slideUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards;}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+/* ══ PAGE 1 ══ */
+.p1{
+  flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;
+  padding:2rem 1rem;
+}
+.p1-inner{
+  width:100%;max-width:520px;
+  display:flex;flex-direction:column;align-items:center;gap:2.2rem;
+}
+.logo-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:0.7rem;
+  animation:slideUp 0.8s ease forwards;
+}
+.logo-img{
+  width:90px;height:90px;object-fit:contain;
+  filter:drop-shadow(0 0 24px rgba(212,175,55,0.6));
+}
+.brand-name{
+  font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;
+  letter-spacing:0.18em;color:var(--gold-l);text-align:center;
+  line-height:1.25;text-shadow:0 0 40px rgba(212,175,55,0.4);
+}
+.brand-est{
+  font-family:'Cormorant Garamond',serif;font-size:0.75rem;
+  letter-spacing:0.45em;color:var(--gold-d);font-style:italic;
+}
+.gold-line{
+  width:100%;max-width:360px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-d),var(--gold),var(--gold-d),transparent);
+}
+.card{
+  width:100%;background:var(--surface);
+  border:1px solid var(--border);border-radius:14px;
+  padding:2.2rem 2rem 2.5rem;position:relative;overflow:hidden;
+  box-shadow:0 8px 60px rgba(0,0,0,0.6), var(--shadow-gold);
+  animation:slideUp 0.8s 0.15s ease both;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);
+}
+.card-title{
+  font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;
+  letter-spacing:0.22em;color:var(--gold);text-align:center;
+  margin-bottom:2rem;
+}
+.field-group{margin-bottom:1.8rem;}
+.field-label{
+  display:block;font-size:0.68rem;letter-spacing:0.28em;font-weight:600;
+  color:var(--gold-d);margin-bottom:0.6rem;font-family:'Cinzel',serif;
+}
+.field-input{
+  width:100%;background:rgba(212,175,55,0.05);
+  border:1px solid var(--border);border-radius:8px;
+  padding:0.85rem 1.1rem;color:var(--text);
+  font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:500;
+  outline:none;transition:all 0.25s;letter-spacing:0.04em;
+}
+.field-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,0.1),inset 0 1px 3px rgba(0,0,0,0.3);}
+.field-input::placeholder{color:var(--text-muted);}
+.err-msg{font-size:0.68rem;color:#FF6B6B;letter-spacing:0.08em;min-height:1rem;display:block;margin-top:0.35rem;}
+
+/* SLIDER */
+.slider-box{display:flex;flex-direction:column;gap:0.8rem;}
+.slider-num{
+  font-family:'Cinzel Decorative',serif;font-size:2.5rem;font-weight:700;
+  color:var(--gold);text-align:center;line-height:1;
+  text-shadow:0 0 20px rgba(212,175,55,0.4);
+}
+.slider-unit{font-size:0.85rem;color:var(--gold-d);font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0.1em;}
+input[type=range]{
+  -webkit-appearance:none;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--gold) var(--pct,25%),rgba(212,175,55,0.15) var(--pct,25%));
+  border-radius:2px;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:radial-gradient(circle,var(--gold-l),var(--gold));
+  border:2px solid var(--bg);
+  box-shadow:0 0 10px rgba(212,175,55,0.7);cursor:pointer;
+  transition:transform 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25);}
+.slider-labs{
+  display:flex;justify-content:space-between;
+  font-size:0.65rem;color:var(--text-muted);letter-spacing:0.12em;
+}
+
+/* BTN */
+.btn-gold{
+  width:100%;padding:1rem 1.5rem;
+  background:linear-gradient(135deg,var(--gold-d) 0%,var(--gold) 45%,var(--gold-d) 100%);
+  border:none;border-radius:8px;
+  color:#060608;font-family:'Cinzel',serif;font-size:0.8rem;font-weight:700;
+  letter-spacing:0.22em;cursor:pointer;margin-top:0.5rem;
+  box-shadow:0 4px 24px rgba(212,175,55,0.3),0 1px 0 rgba(255,255,255,0.1) inset;
+  transition:all 0.2s;position:relative;overflow:hidden;
+}
+.btn-gold::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+  transition:left 0.4s;
+}
+.btn-gold:hover::after{left:100%;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,175,55,0.45);}
+.btn-gold:active{transform:scale(0.98);}
+.btn-gold:disabled{opacity:0.3;cursor:not-allowed;transform:none;}
+.btn-outline{
+  background:transparent;border:1px solid var(--border);border-radius:8px;
+  color:var(--text-dim);font-family:'Rajdhani',sans-serif;font-size:0.8rem;
+  font-weight:600;letter-spacing:0.14em;padding:0.55rem 1.2rem;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-outline:hover{border-color:var(--gold-d);color:var(--gold-d);}
+
+/* ══ PAGE 2 ══ */
+.p2-inner{
+  width:100%;max-width:960px;
+  display:flex;flex-direction:column;gap:1.4rem;
+  padding-top:1.5rem;
+}
+.p2-top{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.p2-title{
+  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
+  color:var(--gold-l);letter-spacing:0.14em;
+}
+.p2-hint{font-size:0.7rem;color:var(--text-muted);letter-spacing:0.1em;margin-top:0.2rem;}
+.slot-progress{
+  display:flex;gap:3px;align-items:center;
+}
+.sp-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(212,175,55,0.15);border:1px solid var(--border);
+  transition:all 0.3s;
+}
+.sp-dot.filled{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(212,175,55,0.5);}
+.sp-count{
+  font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.05em;
+  text-shadow:0 0 12px rgba(212,175,55,0.4);
+}
+
+/* TEAM NAME */
+.team-name-row{
+  display:flex;gap:0.8rem;
+}
+.team-name-row .field-input{
+  font-size:0.95rem;padding:0.65rem 1rem;
+}
+
+/* FIELD DIAGRAM */
+.field-wrap{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:1.2rem;
+  box-shadow:0 4px 30px rgba(0,0,0,0.4);
+  position:relative;overflow:hidden;
+}
+.field-wrap::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);
+}
+.field-title{
+  font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.22em;
+  color:var(--gold-d);text-align:center;margin-bottom:1rem;
+}
+.field-slots{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:0.5rem;
+}
+.slot-card{
+  background:rgba(212,175,55,0.04);border:1px dashed rgba(212,175,55,0.2);
+  border-radius:10px;padding:0.6rem 0.4rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.3rem;
+  text-align:center;cursor:pointer;transition:all 0.25s;min-height:80px;
+  justify-content:center;position:relative;
+}
+.slot-card:hover{border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.07);}
+.slot-card.filled{
+  background:rgba(212,175,55,0.09);border:1px solid rgba(212,175,55,0.4);
+  border-style:solid;
+}
+.slot-card.captain-slot{
+  border-color:var(--gold)!important;
+  box-shadow:0 0 0 1px var(--gold),0 0 16px rgba(212,175,55,0.3);
+}
+.slot-label{
+  font-size:0.58rem;letter-spacing:0.15em;color:var(--text-muted);
+  font-family:'Cinzel',serif;line-height:1.2;
+}
+.slot-badge{
+  font-size:0.5rem;font-weight:700;letter-spacing:0.12em;
+  padding:2px 6px;border-radius:20px;margin-bottom:2px;
+}
+.badge-opener{background:rgba(92,204,106,0.15);color:#5CCC6A;border:1px solid rgba(92,204,106,0.3);}
+.badge-wk{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.3);}
+.badge-bat{background:rgba(100,180,255,0.15);color:#7ABEFF;border:1px solid rgba(100,180,255,0.3);}
+.badge-ar{background:rgba(200,100,220,0.15);color:#CC88EE;border:1px solid rgba(200,100,220,0.3);}
+.badge-bowl{background:rgba(255,140,60,0.15);color:#FFA050;border:1px solid rgba(255,140,60,0.3);}
+.badge-impact{background:rgba(255,60,60,0.15);color:#FF7070;border:1px solid rgba(255,60,60,0.3);}
+.badge-captain{background:var(--gold);color:#060608;border:none;font-size:0.52rem;}
+
+.slot-avatar{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:0.75rem;font-weight:700;
+  color:#060608;background:var(--gold-d);
+  position:relative;overflow:hidden;border:2px solid rgba(212,175,55,0.3);
+}
+.slot-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.slot-name{font-size:0.6rem;font-weight:600;letter-spacing:0.05em;color:var(--text);line-height:1.2;max-width:100%;}
+.slot-empty-icon{font-size:1.2rem;color:var(--text-muted);margin-bottom:2px;}
+.slot-remove{
+  position:absolute;top:3px;right:3px;width:14px;height:14px;
+  background:rgba(139,0,0,0.6);border-radius:50%;border:none;
+  color:#fff;font-size:8px;cursor:pointer;
+  display:none;align-items:center;justify-content:center;line-height:1;
+}
+.slot-card.filled:hover .slot-remove{display:flex;}
+.cap-btn{
+  position:absolute;top:3px;left:3px;
+  background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);
+  border-radius:3px;padding:1px 4px;font-size:0.48rem;font-weight:700;
+  letter-spacing:0.1em;color:var(--gold-d);cursor:pointer;
+  font-family:'Cinzel',serif;display:none;transition:all 0.2s;
+}
+.slot-card.filled:hover .cap-btn{display:block;}
+.slot-card.captain-slot .cap-btn{display:block;background:var(--gold);color:#060608;}
+
+/* PLAYER SECTION */
+.cat-section{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.cat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 1.2rem;
+  background:rgba(212,175,55,0.04);
+  border-bottom:1px solid var(--border);cursor:pointer;
+  transition:background 0.2s;
+}
+.cat-header:hover{background:rgba(212,175,55,0.07);}
+.cat-header-left{display:flex;align-items:center;gap:0.7rem;}
+.cat-icon{font-size:1.2rem;}
+.cat-name{
+  font-family:'Cinzel',serif;font-size:0.82rem;font-weight:700;
+  letter-spacing:0.18em;color:var(--gold);
+}
+.cat-info{font-size:0.68rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:0.1rem;}
+.cat-status{
+  font-family:'Cinzel',serif;font-size:0.75rem;font-weight:700;
+  color:var(--text-muted);letter-spacing:0.08em;
+}
+.cat-status.done{color:#5CCC6A;}
+.cat-arrow{font-size:0.7rem;color:var(--text-muted);transition:transform 0.25s;margin-left:0.5rem;}
+.cat-section.open .cat-arrow{transform:rotate(180deg);}
+
+.cat-body{
+  display:none;padding:1rem;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:0.8rem;
+}
+.cat-section.open .cat-body{display:grid;}
+
+/* PLAYER CARD */
+.pcard{
+  background:rgba(6,6,10,0.8);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;cursor:pointer;
+  transition:all 0.25s;position:relative;
+  display:flex;flex-direction:column;
+}
+.pcard:hover{border-color:rgba(212,175,55,0.45);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+.pcard.selected{
+  border-color:var(--gold);
+  box-shadow:0 0 0 1px var(--gold),0 4px 20px rgba(212,175,55,0.2);
+  background:rgba(212,175,55,0.07);
+}
+.pcard.unavailable{opacity:0.3;pointer-events:none;}
+
+.pcard-photo{
+  width:100%;height:130px;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,rgba(139,0,0,0.2) 0%,rgba(5,5,7,0.8) 100%);
+}
+.pcard-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;
+  transition:transform 0.4s;
+}
+.pcard:hover .pcard-photo img{transform:scale(1.05);}
+.pcard-photo-fallback{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:2.2rem;font-weight:700;
+  color:var(--gold-d);background:radial-gradient(circle at 50% 30%,rgba(139,0,0,0.3),transparent);
+}
+.pcard-jersey{
+  position:absolute;bottom:4px;right:6px;
+  font-family:'Cinzel Decorative',serif;font-size:1.1rem;font-weight:700;
+  color:rgba(212,175,55,0.4);line-height:1;
+}
+.pcard-flag{
+  position:absolute;top:6px;left:6px;font-size:1.1rem;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+}
+.pcard-tick{
+  position:absolute;top:6px;right:6px;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--gold);display:none;
+  align-items:center;justify-content:center;
+  font-size:11px;color:#060608;font-weight:700;
+  box-shadow:0 2px 8px rgba(212,175,55,0.5);
+}
+.pcard.selected .pcard-tick{display:flex;}
+
+.pcard-body{padding:0.65rem 0.7rem 0.75rem;flex:1;display:flex;flex-direction:column;gap:0.4rem;}
+.pcard-name{
+  font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;
+  color:var(--text);letter-spacing:0.05em;line-height:1.3;
+}
+.pcard-hand{font-size:0.6rem;color:var(--text-muted);letter-spacing:0.08em;}
+.pcard-highlights{
+  border-top:1px solid rgba(212,175,55,0.12);
+  padding-top:0.4rem;margin-top:0.1rem;
+  display:flex;flex-direction:column;gap:0.25rem;
+}
+.pcard-hl{
+  display:flex;align-items:flex-start;gap:0.3rem;
+  font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;line-height:1.3;
+}
+.pcard-hl::before{content:'◆';color:var(--gold-d);font-size:0.45rem;margin-top:0.15rem;flex-shrink:0;}
+.pcard-select-btn{
+  margin-top:auto;padding:0.4rem;
+  background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.2);
+  border-radius:6px;color:var(--gold-d);
+  font-family:'Cinzel',serif;font-size:0.58rem;font-weight:700;
+  letter-spacing:0.14em;cursor:pointer;transition:all 0.2s;text-align:center;
+  margin-top:0.5rem;
+}
+.pcard.selected .pcard-select-btn{background:rgba(212,175,55,0.12);border-color:var(--gold);color:var(--gold);}
+.pcard-select-btn:hover{background:rgba(212,175,55,0.12);border-color:var(--gold-d);}
+
+/* BOTTOM BAR */
+.bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:20;
+  background:rgba(5,5,7,0.97);border-top:1px solid var(--border);
+  padding:0.8rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  backdrop-filter:blur(16px);
+}
+.bb-chips{display:flex;gap:0.4rem;flex-wrap:wrap;flex:1;}
+.bb-chip{
+  display:flex;align-items:center;gap:0.3rem;
+  background:rgba(212,175,55,0.08);border:1px solid var(--border);
+  border-radius:20px;padding:3px 10px;
+  font-size:0.68rem;letter-spacing:0.06em;color:var(--gold);font-weight:600;
+  cursor:pointer;transition:all 0.15s;
+}
+.bb-chip:hover{background:rgba(212,175,55,0.15);}
+.bb-chip.is-cap{background:rgba(212,175,55,0.2);border-color:var(--gold);}
+.bb-chip .bb-c-icon{font-size:0.7rem;color:var(--gold-d);}
+.bb-right{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
+.bb-submit{
+  padding:0.6rem 1.4rem;
+  background:linear-gradient(135deg,var(--gold-d),var(--gold),var(--gold-d));
+  border:none;border-radius:6px;color:#060608;
+  font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.16em;cursor:pointer;
+  box-shadow:0 3px 16px rgba(212,175,55,0.3);
+  transition:all 0.2s;white-space:nowrap;
+}
+.bb-submit:hover{transform:translateY(-1px);box-shadow:0 5px 24px rgba(212,175,55,0.45);}
+.bb-submit:disabled{opacity:0.3;cursor:not-allowed;transform:none;}
+.bb-count{
+  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.05em;white-space:nowrap;
+}
+
+/* ══ PAGE 3 ══ */
+.p3-inner{
+  width:100%;max-width:720px;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.8rem;padding-top:2rem;
+}
+.p3-title{
+  font-family:'Cinzel Decorative',serif;font-size:1.6rem;font-weight:700;
+  color:var(--gold-l);text-align:center;letter-spacing:0.1em;
+  text-shadow:0 0 50px rgba(212,175,55,0.5);line-height:1.3;
+}
+.p3-sub{
+  font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+  color:var(--text-dim);letter-spacing:0.15em;font-style:italic;text-align:center;
+}
+.p3-card{
+  width:100%;background:var(--surface);
+  border:1px solid var(--border);border-radius:16px;
+  padding:2rem;position:relative;overflow:hidden;
+  box-shadow:0 8px 60px rgba(0,0,0,0.6);
+}
+.p3-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red-m),var(--gold),var(--red-m),transparent);
+}
+.p3-info-row{
+  display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
+  padding-bottom:1.5rem;margin-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+.p3-info{text-align:center;}
+.p3-info label{
+  display:block;font-size:0.62rem;letter-spacing:0.25em;
+  color:var(--gold-d);font-family:'Cinzel',serif;margin-bottom:0.25rem;
+}
+.p3-info .val{
+  font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--gold-l);
+}
+.p3-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0.7rem;
+}
+.p3-player{
+  background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.18);
+  border-radius:10px;padding:0.7rem 0.5rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.3rem;
+  text-align:center;position:relative;
+}
+.p3-player.p3-captain{
+  border-color:var(--gold);background:rgba(212,175,55,0.12);
+  box-shadow:0 0 0 1px var(--gold),0 4px 14px rgba(212,175,55,0.2);
+}
+.p3-player-photo{
+  width:44px;height:44px;border-radius:50%;overflow:hidden;
+  border:2px solid rgba(212,175,55,0.3);background:rgba(139,0,0,0.2);
+  flex-shrink:0;
+}
+.p3-player-photo img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.p3-player-fallback{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;color:var(--gold-d);
+}
+.p3-num{font-size:0.58rem;color:var(--gold-d);font-family:'Cinzel',serif;letter-spacing:0.1em;}
+.p3-name{font-size:0.7rem;font-weight:700;color:var(--text);letter-spacing:0.04em;line-height:1.2;}
+.p3-role{font-size:0.58rem;color:var(--text-muted);}
+.p3-cap-badge{
+  font-size:0.55rem;background:var(--gold);color:#060608;
+  border-radius:20px;padding:1px 7px;font-weight:700;
+  letter-spacing:0.12em;font-family:'Cinzel',serif;
+}
+.p3-slot-label{
+  font-size:0.55rem;color:var(--text-muted);letter-spacing:0.1em;
+}
+.p3-actions{display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;}
+.p3-actions .btn-gold{width:auto;padding:0.75rem 2rem;font-size:0.75rem;}
+.p3-share-url{
+  width:100%;background:rgba(212,175,55,0.05);border:1px solid var(--border);
+  border-radius:8px;padding:0.7rem 1rem;
+  font-size:0.72rem;color:var(--text-muted);letter-spacing:0.04em;
+  word-break:break-all;text-align:center;
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;top:1.5rem;left:50%;transform:translateX(-50%);
+  background:rgba(8,8,12,0.97);border:1px solid var(--gold);
+  border-radius:10px;padding:0.7rem 1.6rem;
+  font-size:0.8rem;font-weight:600;color:var(--gold);
+  letter-spacing:0.1em;z-index:999;
+  opacity:0;transition:opacity 0.3s;pointer-events:none;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5);
+  font-family:'Rajdhani',sans-serif;
+}
+.toast.show{opacity:1;}
+
+/* CAPTAIN HINT */
+.captain-hint{
+  text-align:center;font-size:0.68rem;letter-spacing:0.12em;
+  color:var(--text-muted);padding:0.4rem 0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.25);border-radius:2px;}
+
+/* Responsive */
+@media(max-width:600px){
+  .field-slots{grid-template-columns:repeat(3,1fr);}
+  .p3-grid{grid-template-columns:repeat(3,1fr);}
+  .p3-info-row{gap:1.2rem;}
+}
+@media(max-width:400px){
+  .field-slots{grid-template-columns:repeat(2,1fr);}
+  .pcard-photo{height:100px;}
+  .cat-body{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div id="bg">
+  <div class="noise"></div>
+  <div id="bg-text">RCB</div>
+  <img id="bg-logo"
+    src="https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png"
+    alt=""
+    onerror="this.src='https://www.iplt20.com/assets/images/franchise-logos/RCB.png';this.onerror=null;">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════ PAGE 1 ══════════════ -->
+<div class="page p1 active" id="page1">
+  <div class="p1-inner animate-in">
+    <div class="logo-wrap">
+      <img class="logo-img"
+        src="https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png"
+        alt="RCB"
+        onerror="this.src='https://www.iplt20.com/assets/images/franchise-logos/RCB.png';this.onerror=null;">
+      <div class="brand-name">ROYAL CHALLENGERS<br>BENGALURU</div>
+      <div class="brand-est">EST. 2008 · IPL</div>
+    </div>
+    <div class="gold-line"></div>
+    <div class="card">
+      <div class="card-title">WHO IS THIS CHALLENGER?</div>
+      <div class="field-group">
+        <label class="field-label">YOUR NAME *</label>
+        <input type="text" class="field-input" id="userName" placeholder="Enter your name..." maxlength="40" autocomplete="off">
+        <span class="err-msg" id="nameErr"></span>
+      </div>
+      <div class="field-group">
+        <label class="field-label">HOW MANY YEARS ARE YOU AN RCB FAN?</label>
+        <div class="slider-box">
+          <div><div class="slider-num" id="yearsVal">5</div><div class="slider-unit" id="yearsUnit" style="text-align:center">years of unwavering loyalty</div></div>
+          <input type="range" id="yearsSlider" min="0" max="17" value="5">
+          <div class="slider-labs"><span>New Fan</span><span>Since 2008</span></div>
+        </div>
+      </div>
+      <button class="btn-gold" onclick="goP2()">BUILD MY DREAM XI →</button>
+    </div>
+    <div style="font-size:0.7rem;color:var(--text-muted);letter-spacing:0.18em;text-align:center;font-family:'Cinzel',serif;">ᴇᴇ ꜱᴀʟᴀ ᴄᴜᴘ ɴᴀᴍᴅᴇ 🔴</div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 2 ══════════════ -->
+<div class="page" id="page2">
+  <div class="p2-inner animate-in">
+
+    <div class="p2-top">
+      <div>
+        <div class="p2-title">BUILD YOUR DREAM XI</div>
+        <div class="p2-hint">FILL ALL 11 SLOTS · TAP A FILLED SLOT TO MAKE CAPTAIN</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <div class="slot-progress" id="slotProgress"></div>
+        <div class="bb-count"><span id="selCount">0</span>/11</div>
+      </div>
+    </div>
+
+    <!-- TEAM NAME -->
+    <div class="team-name-row">
+      <input type="text" class="field-input" id="teamName" placeholder="Name your dream team..." maxlength="40" autocomplete="off">
+    </div>
+
+    <!-- FIELD DIAGRAM -->
+    <div class="field-wrap">
+      <div class="field-title">YOUR DREAM XI LINEUP</div>
+      <div class="field-slots" id="fieldSlots"></div>
+      <div class="captain-hint" id="capHint">Tap any filled slot to assign captain · Captain appears with ©</div>
+    </div>
+
+    <!-- PLAYER CATEGORIES -->
+    <div id="catSections"></div>
+
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar" id="bottomBar">
+    <div class="bb-chips" id="bbChips">
+      <span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;font-family:'Cormorant Garamond',serif;font-style:italic;">No players selected yet…</span>
+    </div>
+    <div class="bb-right">
+      <button class="bb-submit" id="submitBtn" disabled onclick="goP3()">SUBMIT TEAM →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 3 ══════════════ -->
+<div class="page" id="page3">
+  <div class="p3-inner animate-in">
+    <div style="font-size:3.5rem;text-align:center;">🏆</div>
+    <div class="p3-title" id="p3Title">YOUR DREAM XI IS READY!</div>
+    <div class="p3-sub" id="p3Sub">Ee Sala Cup Namde — Submitted with fire & passion</div>
+
+    <div class="p3-card">
+      <div class="p3-info-row">
+        <div class="p3-info"><label>FAN NAME</label><div class="val" id="p3Name">—</div></div>
+        <div class="p3-info"><label>FAN SINCE</label><div class="val" id="p3Since">—</div></div>
+        <div class="p3-info"><label>TEAM NAME</label><div class="val" id="p3Team">—</div></div>
+        <div class="p3-info"><label>CAPTAIN</label><div class="val" id="p3Cap">—</div></div>
+      </div>
+      <div class="p3-grid" id="p3Grid"></div>
+    </div>
+
+    <div class="p3-share-url" id="shareUrlBox" style="display:none;"></div>
+
+    <div class="p3-actions">
+      <button class="btn-outline" onclick="goP1()">← START OVER</button>
+      <button class="btn-gold" onclick="copyShareLink()">COPY SHARE LINK 🔗</button>
+      <button class="btn-gold" style="background:linear-gradient(135deg,#1da1f2,#0d8ecf);" onclick="shareNative()">SHARE TEAM ↗</button>
+    </div>
+
+    <div style="font-size:0.7rem;color:var(--text-muted);letter-spacing:0.18em;text-align:center;font-family:'Cinzel',serif;padding-bottom:1rem;">ᴇᴇ ꜱᴀʟᴀ ᴄᴜᴘ ɴᴀᴍᴅᴇ 🔴🔴</div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════ DATA ═══════════════ */
+const SLOTS = [
+  {key:"op1",  label:"OPENER 1",      badge:"badge-opener", icon:"🏏", cat:"openers"},
+  {key:"op2",  label:"OPENER 2",      badge:"badge-opener", icon:"🏏", cat:"openers"},
+  {key:"wk",   label:"WICKET KEEPER", badge:"badge-wk",     icon:"🧤", cat:"wicketKeepers"},
+  {key:"bat1", label:"BATSMAN (R)",   badge:"badge-bat",    icon:"🏏", cat:"batsmen"},
+  {key:"bat2", label:"BATSMAN (L)",   badge:"badge-bat",    icon:"🏏", cat:"batsmen"},
+  {key:"ar1",  label:"ALL-ROUNDER 1", badge:"badge-ar",     icon:"⚡", cat:"allRounders"},
+  {key:"ar2",  label:"ALL-ROUNDER 2", badge:"badge-ar",     icon:"⚡", cat:"allRounders"},
+  {key:"bwl1", label:"PRIME BOWLER 1",badge:"badge-bowl",   icon:"💥", cat:"bowlers"},
+  {key:"bwl2", label:"PRIME BOWLER 2",badge:"badge-bowl",   icon:"💥", cat:"bowlers"},
+  {key:"bwl3", label:"PRIME BOWLER 3",badge:"badge-bowl",   icon:"💥", cat:"bowlers"},
+  {key:"imp",  label:"IMPACT PLAYER", badge:"badge-impact", icon:"⭐", cat:"all"},
+];
+
+const CATS = {
+  openers:{
+    label:"OPENERS",icon:"🏏",info:"Select 2 openers — They'll face the new ball",
+    players:[
+      {id:1,  name:"Virat Kohli",       init:"VK",jersey:18,hand:"Right-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Virat%20Kohli.png",
+       highlights:["8,000+ IPL Runs — All-time top scorer","7 IPL Centuries — Record holder","4× Orange Cap winner"]},
+      {id:2,  name:"Phil Salt",         init:"PS",jersey:10,hand:"Right-handed",country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Phil%20Salt.png",
+       highlights:["Strike Rate 150+ in T20Is","England's explosive opener","Wicket-keeper batter"]},
+      {id:3,  name:"Rajat Patidar",     init:"RP",jersey:1, hand:"Right-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Rajat%20Patidar.png",
+       highlights:["RCB Captain 2025","IPL Century on debut — vs LSG","MP domestic stalwart"]},
+      {id:4,  name:"Jacob Bethell",     init:"JB",jersey:7, hand:"Left-handed",country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Jacob%20Bethell.png",
+       highlights:["England's next big thing","Left-handed elegance","IPL debut sensation 2025"]},
+    ]
+  },
+  wicketKeepers:{
+    label:"WICKET KEEPER",icon:"🧤",info:"Select 1 wicket keeper",
+    players:[
+      {id:5,  name:"Phil Salt",         init:"PS",jersey:10,hand:"Right-handed",country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Phil%20Salt.png",
+       highlights:["Strike Rate 150+ in T20Is","Explosive powerplay batter","England regular behind stumps"]},
+      {id:6,  name:"Dinesh Karthik",    init:"DK",jersey:4, hand:"Right-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Dinesh%20Karthik.png",
+       highlights:["IPL Final finisher legend 2022","16-year IPL career","Death-overs specialist"]},
+    ]
+  },
+  batsmen:{
+    label:"BATSMEN",icon:"🏏",info:"Select 2 batsmen for the middle order",
+    players:[
+      {id:7,  name:"Devdutt Padikkal",  init:"DP",jersey:20,hand:"Left-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Devdutt%20Padikkal.png",
+       highlights:["Left-handed elegance","2020 IPL breakout star","India T20I squad regular"]},
+      {id:8,  name:"Manoj Bhandage",    init:"MB",jersey:6, hand:"Right-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Manoj%20Bhandage.png",
+       highlights:["Karnataka domestic run-machine","Hard-hitting middle order","IPL rising star 2024"]},
+      {id:9,  name:"Liam Livingstone",  init:"LL",jersey:23,hand:"Right-handed",country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Liam%20Livingstone.png",
+       highlights:["360° batsman","Leg-spin & off-spin threat","England power-hitting machine"]},
+      {id:10, name:"Tim David",         init:"TD",jersey:8, hand:"Right-handed",country:"🇸🇬",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Tim%20David.png",
+       highlights:["T20 SR 160+ globally","Death-overs finisher supreme","Singapore → World stage"]},
+    ]
+  },
+  allRounders:{
+    label:"ALL-ROUNDERS",icon:"⚡",info:"Select 2 all-rounders — bat AND bowl",
+    players:[
+      {id:11, name:"Glenn Maxwell",     init:"GM",jersey:32,hand:"Right-handed",country:"🇦🇺",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Glenn%20Maxwell.png",
+       highlights:["The Big Show — 201* ODI miracle","Off-spin & unorthodox batting","World Cup winner 2021 & 2023"]},
+      {id:12, name:"Krunal Pandya",     init:"KP",jersey:24,hand:"Left-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Krunal%20Pandya.png",
+       highlights:["IPL debut record 83* off 37","Left-arm spin all-rounder","India ODI & T20I capped"]},
+      {id:13, name:"Swapnil Singh",     init:"SS",jersey:11,hand:"Left-handed",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Swapnil%20Singh.png",
+       highlights:["Left-arm spin & useful bat","IPL comeback story","Domestic all-rounder stalwart"]},
+      {id:14, name:"Jacob Bethell",     init:"JB",jersey:7, hand:"Left-handed",country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Jacob%20Bethell.png",
+       highlights:["Bat & bowl versatility","England young gun","Spin-bowling all-rounder"]},
+    ]
+  },
+  bowlers:{
+    label:"PRIME BOWLERS",icon:"💥",info:"Select 3 bowlers to destroy the opposition",
+    players:[
+      {id:15, name:"Josh Hazlewood",    init:"JH",jersey:38,hand:"Right-arm Fast",country:"🇦🇺",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Josh%20Hazlewood.png",
+       highlights:["World's #1 ranked T20I bowler","Powerplay & death specialist","World Cup winner 2021"]},
+      {id:16, name:"Mohammed Siraj",    init:"MS",jersey:13,hand:"Right-arm Fast",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Mohammed%20Siraj.png",
+       highlights:["India's pace spearhead","Best IPL economy in pace category","Swing & reverse swing master"]},
+      {id:17, name:"Yash Dayal",        init:"YD",jersey:22,hand:"Left-arm Fast",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Yash%20Dayal.png",
+       highlights:["Left-arm angle advantage","Death-overs yorker specialist","UP Domestic hero"]},
+      {id:18, name:"Suyash Sharma",     init:"SY",jersey:16,hand:"Right-arm Leg-spin",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Suyash%20Sharma.png",
+       highlights:["Leg-spin mystery prodigy","U19 World Cup champion 2022","Deceptive googly & flipper"]},
+      {id:19, name:"Bhuvneshwar Kumar", init:"BK",jersey:15,hand:"Right-arm Medium",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Bhuvneshwar%20Kumar.png",
+       highlights:["Swing King of Indian cricket","Top-5 IPL wicket-takers ever","New-ball & death precision"]},
+      {id:20, name:"Rasikh Dar",        init:"RD",jersey:28,hand:"Right-arm Fast",country:"🇮🇳",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Rasikh%20Dar.png",
+       highlights:["Kashmir's pace sensation","Extra bounce & steep trajectory","IPL breakthrough star"]},
+      {id:21, name:"Lungi Ngidi",       init:"LN",jersey:7, hand:"Right-arm Fast",country:"🇿🇦",
+       photo:"https://scores.iplt20.com/ipl/playerimages/Lungi%20Ngidi.png",
+       highlights:["South Africa spearhead","Express pace 140+ km/h","Death-over wicket-taker"]},
+    ]
+  },
+};
+
+// Build allPlayers flat array
+const ALL_PLAYERS = Object.values(CATS).flatMap(c=>c.players);
+const ALL_IDS = [...new Set(ALL_PLAYERS.map(p=>p.id))];
+function playerById(id){return ALL_PLAYERS.find(p=>p.id===id);}
+
+/* ═══════════════ STATE ═══════════════ */
+let state = {
+  userName:"", yearsAsFan:5, teamName:"",
+  slots:{}, // key -> player id
+  captain: null
+};
+
+/* ═══════════════ SLIDER ═══════════════ */
+const slider = document.getElementById("yearsSlider");
+function syncSlider(){
+  const v = +slider.value;
+  document.getElementById("yearsVal").textContent = v===17?"17+":v;
+  const units = [
+    "years — welcome, new Challenger!",
+    "year of pure RCB passion",
+    "years of RCB love",
+    "years — you've seen the highs",
+    "years — you know the lows too",
+    "years of unwavering loyalty",
+    "years — a true Challenger",
+    "years — you bleed red!",
+    "years — since 2017 season",
+    "years — since 2016 final!",
+    "years — since 2015 season",
+    "years — a veteran fan",
+    "years — since 2012 season",
+    "years — a decade of faith",
+    "years — since the beginning",
+    "years — OG fan status",
+    "years — you're basically RCB family",
+    "+ years — Original Challenger!"
+  ];
+  document.getElementById("yearsUnit").textContent = units[v] || "years";
+  const pct = ((v-slider.min)/(slider.max-slider.min))*100;
+  slider.style.setProperty("--pct",pct+"%");
+}
+slider.addEventListener("input",syncSlider);
+syncSlider();
+
+/* ═══════════════ NAV ═══════════════ */
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+    p.querySelectorAll(".animate-in").forEach(el=>el.style.animation="none");
+  });
+  const pg = document.getElementById(id);
+  pg.classList.add("active");
+  setTimeout(()=>{
+    pg.querySelectorAll(".animate-in").forEach(el=>{el.style.animation="";});
+  },10);
+  pg.scrollTop=0;
+}
+
+function goP1(){
+  state = {userName:"",yearsAsFan:5,teamName:"",slots:{},captain:null};
+  document.getElementById("teamName").value="";
+  document.getElementById("userName").value="";
+  slider.value=5; syncSlider();
+  renderAll();
+  showPage("page1");
+}
+
+function goP2(){
+  const name = document.getElementById("userName").value.trim();
+  if(!name){
+    document.getElementById("nameErr").textContent="Please enter your name to continue.";
+    document.getElementById("userName").focus();
+    return;
+  }
+  document.getElementById("nameErr").textContent="";
+  state.userName = name;
+  state.yearsAsFan = +slider.value;
+  renderAll();
+  showPage("page2");
+}
+
+function goP3(){
+  const filled = SLOTS.filter(s=>state.slots[s.key]);
+  if(filled.length!==11){toast("Select all 11 players first!");return;}
+  if(!state.captain){
+    // auto-assign captain to opener 1
+    const p = playerById(state.slots["op1"]);
+    state.captain = state.slots["op1"];
+    toast(p.name+" auto-assigned as Captain!");
+  }
+  state.teamName = document.getElementById("teamName").value.trim() || state.userName+"'s Dream XI";
+  renderP3();
+  saveSubmission();
+  showPage("page3");
+}
+
+/* ═══════════════ RENDER ALL ═══════════════ */
+function renderAll(){
+  renderFieldSlots();
+  renderCats();
+  renderBottomBar();
+  renderProgress();
+}
+
+/* ── FIELD SLOTS ── */
+function renderFieldSlots(){
+  const container = document.getElementById("fieldSlots");
+  container.innerHTML="";
+  SLOTS.forEach(slot=>{
+    const pid = state.slots[slot.key];
+    const p = pid ? playerById(pid) : null;
+    const isCap = pid && pid===state.captain;
+
+    const el = document.createElement("div");
+    el.className = "slot-card"+(p?" filled":"")+(isCap?" captain-slot":"");
+    el.dataset.key = slot.key;
+
+    if(p){
+      el.innerHTML=`
+        <button class="cap-btn" title="Make Captain" onclick="e(event);makeCaptain(${pid})">${isCap?"© CAPTAIN":"SET C"}</button>
+        <button class="slot-remove" title="Remove" onclick="e(event);removeSlot('${slot.key}')">✕</button>
+        <div class="slot-avatar">
+          <img src="${p.photo}" alt="${p.init}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+          <div class="pcard-photo-fallback" style="display:none;width:100%;height:100%;font-size:0.65rem;">${p.init}</div>
+        </div>
+        <div class="slot-badge ${slot.badge}">${slot.label}</div>
+        ${isCap?'<div class="slot-badge badge-captain">© CAPTAIN</div>':""}
+        <div class="slot-name">${p.name.split(" ")[0]}</div>
+      `;
+    } else {
+      el.innerHTML=`
+        <div class="slot-empty-icon">${slot.icon}</div>
+        <div class="slot-badge ${slot.badge}">${slot.label}</div>
+        <div class="slot-label">EMPTY</div>
+      `;
+      el.onclick=()=>openCat(slot.cat);
+    }
+    container.appendChild(el);
+  });
+}
+
+function e(ev){ev.stopPropagation();}
+
+function makeCaptain(pid){
+  state.captain = state.captain===pid?null:pid;
+  const p=playerById(pid);
+  if(state.captain) toast(p.name+" is now CAPTAIN! ©");
+  renderAll();
+}
+
+function removeSlot(key){
+  const pid = state.slots[key];
+  if(state.captain===pid) state.captain=null;
+  delete state.slots[key];
+  renderAll();
+}
+
+/* ── CATEGORIES ── */
+function renderCats(){
+  const container = document.getElementById("catSections");
+  container.innerHTML="";
+
+  // Regular cats
+  Object.entries(CATS).forEach(([catKey,cat])=>{
+    container.appendChild(buildCatSection(catKey,cat));
+  });
+
+  // Impact Player section (any player not yet used)
+  const usedIds = Object.values(state.slots).filter(Boolean);
+  const available = ALL_PLAYERS.filter(p=>!usedIds.includes(p.id) || state.slots["imp"]===p.id);
+  const impCat = {
+    label:"IMPACT PLAYER",icon:"⭐",
+    info:"Select 1 impact player — any position (IPL rule: substitute mid-match)",
+    players: [...new Set(available.map(p=>p.id))].map(id=>ALL_PLAYERS.find(p=>p.id===id))
+  };
+  container.appendChild(buildCatSection("impactPlayers",impCat,true));
+}
+
+function buildCatSection(catKey,cat,isImpact=false){
+  const slotKeys = isImpact ? ["imp"] : SLOTS.filter(s=>s.cat===catKey || s.cat===catKey.replace(/s$/,"")).map(s=>s.key);
+  const filled = slotKeys.filter(k=>state.slots[k]).length;
+  const total = slotKeys.length;
+  const isDone = filled===total;
+
+  const usedInOtherSlots = Object.entries(state.slots)
+    .filter(([k])=>!slotKeys.includes(k))
+    .map(([,pid])=>pid);
+
+  const sec = document.createElement("div");
+  sec.className="cat-section"+(isDone?"":" open");
+  sec.id="cat-"+catKey;
+
+  const header = document.createElement("div");
+  header.className="cat-header";
+  header.innerHTML=`
+    <div class="cat-header-left">
+      <span class="cat-icon">${cat.icon}</span>
+      <div>
+        <div class="cat-name">${cat.label}</div>
+        <div class="cat-info">${cat.info}</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div class="cat-status${isDone?" done":""}">${filled}/${total}</div>
+      <div class="cat-arrow">▾</div>
+    </div>
+  `;
+  header.onclick=()=>sec.classList.toggle("open");
+
+  const body = document.createElement("div");
+  body.className="cat-body";
+
+  cat.players.forEach(p=>{
+    // check if this player is already used in another slot
+    const alreadyElsewhere = usedInOtherSlots.includes(p.id);
+    // find if this player is in any of this cat's slots
+    const inThisSlot = slotKeys.find(k=>state.slots[k]===p.id);
+    const isSelected = !!inThisSlot;
+
+    const card = document.createElement("div");
+    card.className = "pcard"+(isSelected?" selected":"")+(alreadyElsewhere?" unavailable":"");
+
+    card.innerHTML=`
+      <div class="pcard-photo">
+        <img src="${p.photo}" alt="${p.name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pcard-photo-fallback" style="display:none">${p.init}</div>
+        <div class="pcard-flag">${p.country}</div>
+        <div class="pcard-jersey">#${p.jersey}</div>
+        <div class="pcard-tick">✓</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-hand">${p.hand}</div>
+        <div class="pcard-highlights">
+          ${p.highlights.map(h=>`<div class="pcard-hl">${h}</div>`).join("")}
+        </div>
+        <div class="pcard-select-btn">${isSelected?"✓ SELECTED · CLICK TO REMOVE":"+ SELECT PLAYER"}</div>
+      </div>
+    `;
+    card.onclick=()=>togglePlayer(catKey,slotKeys,p.id,isImpact);
+    body.appendChild(card);
+  });
+
+  sec.appendChild(header);
+  sec.appendChild(body);
+  return sec;
+}
+
+function getSlotKeys(catKey){
+  return SLOTS.filter(s=>{
+    if(catKey==="impactPlayers") return s.key==="imp";
+    if(catKey==="openers") return s.cat==="openers";
+    if(catKey==="wicketKeepers") return s.cat==="wicketKeepers";
+    if(catKey==="batsmen") return s.cat==="batsmen";
+    if(catKey==="allRounders") return s.cat==="allRounders";
+    if(catKey==="bowlers") return s.cat==="bowlers";
+    return false;
+  }).map(s=>s.key);
+}
+
+function togglePlayer(catKey,slotKeys,pid){
+  // If already selected in a slot, remove it
+  const existingKey = slotKeys.find(k=>state.slots[k]===pid);
+  if(existingKey){
+    if(state.captain===pid) state.captain=null;
+    delete state.slots[existingKey];
+    renderAll(); return;
+  }
+
+  // Check if this player is already used in another category's slots
+  const usedKey = Object.entries(state.slots).find(([,id])=>id===pid);
+  if(usedKey && !slotKeys.includes(usedKey[0])){
+    toast("Player already selected in another position!");
+    return;
+  }
+
+  // Find empty slot in this category
+  const emptySlot = slotKeys.find(k=>!state.slots[k]);
+  if(!emptySlot){
+    toast(`All ${catKey.replace(/([A-Z])/g," $1").toLowerCase()} slots are filled!`);
+    return;
+  }
+
+  state.slots[emptySlot] = pid;
+
+  // Auto-assign captain to opener 1
+  if(emptySlot==="op1" && !state.captain) state.captain=pid;
+
+  renderAll();
+  // Auto-open next section if this one is now full
+  const filled = slotKeys.filter(k=>state.slots[k]).length;
+  if(filled===slotKeys.length){
+    const sec = document.getElementById("cat-"+catKey);
+    if(sec) sec.classList.remove("open");
+  }
+}
+
+function openCat(cat){
+  // map cat string to section id
+  const map = {
+    openers:"cat-openers",
+    wicketKeepers:"cat-wicketKeepers",
+    batsmen:"cat-batsmen",
+    allRounders:"cat-allRounders",
+    bowlers:"cat-bowlers",
+    all:"cat-impactPlayers"
+  };
+  const id = map[cat]||"cat-"+cat;
+  const el = document.getElementById(id);
+  if(el){el.classList.add("open");el.scrollIntoView({behavior:"smooth",block:"start"});}
+}
+
+/* ── BOTTOM BAR ── */
+function renderBottomBar(){
+  const chips = document.getElementById("bbChips");
+  const filledSlots = SLOTS.filter(s=>state.slots[s.key]);
+  const count = filledSlots.length;
+
+  document.getElementById("selCount").textContent=count;
+  document.getElementById("submitBtn").disabled=(count!==11);
+
+  if(count===0){
+    chips.innerHTML='<span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;font-family:\'Cormorant Garamond\',serif;font-style:italic;">No players selected yet…</span>';
+    return;
+  }
+  chips.innerHTML="";
+  filledSlots.forEach(sl=>{
+    const pid=state.slots[sl.key];
+    const p=playerById(pid);
+    const isCap=pid===state.captain;
+    const chip=document.createElement("div");
+    chip.className="bb-chip"+(isCap?" is-cap":"");
+    chip.title="Tap to make "+p.name+" captain";
+    chip.innerHTML=(isCap?`<span class="bb-c-icon">©</span> `:"")+(p.name.split(" ")[0]);
+    chip.onclick=()=>{makeCaptain(pid);};
+    chips.appendChild(chip);
+  });
+}
+
+/* ── PROGRESS ── */
+function renderProgress(){
+  const prog = document.getElementById("slotProgress");
+  prog.innerHTML="";
+  SLOTS.forEach(s=>{
+    const dot=document.createElement("div");
+    dot.className="sp-dot"+(state.slots[s.key]?" filled":"");
+    prog.appendChild(dot);
+  });
+}
+
+/* ═══════════════ PAGE 3 ═══════════════ */
+function renderP3(){
+  const yr = state.yearsAsFan;
+  const yrLabel = yr===17?"17+ Years":yr+(yr===1?" Year":" Years");
+  const cap = playerById(state.captain);
+
+  document.getElementById("p3Title").textContent="YOUR DREAM XI IS READY, "+state.userName.toUpperCase()+"!";
+  document.getElementById("p3Name").textContent=state.userName;
+  document.getElementById("p3Since").textContent=yrLabel;
+  document.getElementById("p3Team").textContent=state.teamName;
+  document.getElementById("p3Cap").textContent=cap?cap.name:"—";
+
+  const grid = document.getElementById("p3Grid");
+  grid.innerHTML="";
+  SLOTS.forEach((sl,i)=>{
+    const pid=state.slots[sl.key];
+    if(!pid) return;
+    const p=playerById(pid);
+    const isCap=pid===state.captain;
+    const el=document.createElement("div");
+    el.className="p3-player"+(isCap?" p3-captain":"");
+    el.innerHTML=`
+      <div class="p3-num">#${i+1} · ${sl.label}</div>
+      ${isCap?'<div class="p3-cap-badge">© CAPTAIN</div>':""}
+      <div class="p3-player-photo">
+        <img src="${p.photo}" alt="${p.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="p3-player-fallback" style="display:none">${p.init}</div>
+      </div>
+      <div class="p3-name">${p.name}</div>
+      <div class="p3-role">${p.hand}</div>
+      <div style="font-size:1rem">${p.country}</div>
+    `;
+    grid.appendChild(el);
+  });
+
+  // Build share URL
+  const data = {
+    n:state.userName, y:state.yearsAsFan, t:state.teamName,
+    c:state.captain,
+    s:Object.fromEntries(Object.entries(state.slots))
+  };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const url = window.location.origin+window.location.pathname+"#team="+encoded;
+  window._shareUrl=url;
+  document.getElementById("shareUrlBox").textContent=url;
+  document.getElementById("shareUrlBox").style.display="block";
+}
+
+function copyShareLink(){
+  if(navigator.clipboard && window._shareUrl){
+    navigator.clipboard.writeText(window._shareUrl).then(()=>toast("Share link copied to clipboard! 🔗"));
+  }
+}
+
+function shareNative(){
+  const cap=playerById(state.captain);
+  const lines=[
+    "🔴 MY RCB DREAM XI 🔴",
+    "Fan: "+state.userName+" ("+state.yearsAsFan+"yr fan)",
+    "Team: "+state.teamName,
+    "Captain: "+(cap?cap.name:"—"),
+    "",
+    ...SLOTS.map((sl,i)=>{
+      const pid=state.slots[sl.key];
+      const p=pid?playerById(pid):null;
+      return p?(i+1)+". "+(pid===state.captain?"© ":"")+p.name+" ["+sl.label+"]":"";
+    }).filter(Boolean),
+    "",
+    "🔗 "+window._shareUrl,
+    "EE SALA CUP NAMDE! 🏆"
+  ].join("\n");
+
+  if(navigator.share){
+    navigator.share({title:"My RCB Dream XI",text:lines,url:window._shareUrl}).catch(()=>{});
+  } else {
+    navigator.clipboard && navigator.clipboard.writeText(lines).then(()=>toast("Team text copied!"));
+  }
+}
+
+/* ═══════════════ ADMIN / STORAGE ═══════════════ */
+function saveSubmission(){
+  const key="rcbDreamXI_submissions";
+  const prev=JSON.parse(localStorage.getItem(key)||"[]");
+  prev.push({
+    ts: new Date().toISOString(),
+    userName: state.userName,
+    yearsAsFan: state.yearsAsFan,
+    teamName: state.teamName,
+    captain: state.captain,
+    slots: {...state.slots}
+  });
+  localStorage.setItem(key,JSON.stringify(prev));
+}
+
+/* ═══════════════ TOAST ═══════════════ */
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg; el.classList.add("show");
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove("show"),2600);
+}
+
+/* ═══════════════ LOAD SHARED TEAM ═══════════════ */
+function loadFromHash(){
+  const hash=window.location.hash;
+  if(!hash.startsWith("#team=")) return;
+  try{
+    const encoded=hash.slice(6);
+    const data=JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    state.userName=data.n||"Challenger";
+    state.yearsAsFan=data.y||0;
+    state.teamName=data.t||state.userName+"'s Dream XI";
+    state.captain=data.c;
+    state.slots=data.s||{};
+    renderP3();
+    document.getElementById("p3Title").textContent="🔴 "+state.userName.toUpperCase()+"'S DREAM XI";
+    showPage("page3");
+    toast("Shared team loaded successfully!");
+  }catch(err){
+    console.error("Failed to load shared team",err);
+  }
+}
+
+/* ═══════════════ INIT ═══════════════ */
+renderAll();
+loadFromHash();
+</script>
+</body>
+</html>
